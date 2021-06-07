@@ -12,8 +12,20 @@ html {
 
 body {
 	height: 100%;
+	width: 100%;
 	position: fixed;
 	/* prevent overscroll bounce*/
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
+}
+
+.form-control:focus {
+	box-shadow: none;
+}
+
+.form-control-underlined {
+	border-width: 0;
+	border-bottom-width: 1px;
+	border-radius: 0;
+	padding-left: 0;
 }
