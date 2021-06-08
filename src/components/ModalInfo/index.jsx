@@ -82,3 +82,19 @@ const index = (props) => {
 }
 
 export default index;
+
+// <Card>
+//   <Card.Body>
+//     <Row>
+//       <Col md={{span: 1}}>1</Col>
+//       <Col md={{span: 8, offset:1}}>
+//         <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDF7DeX7k7oJSCSmCy6GFv0N_STMQuWTS-ew&usqp=CAU" 
+//         roundedCircle 
+//         height="32"
+//         />
+//         Le Duc Do
+//       </Col>
+//       <Col md={{span: 1}}>1</Col>
+//     </Row>
+//   </Card.Body>
+// </Card>
