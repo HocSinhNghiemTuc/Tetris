@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }from 'react';
 
 import {
     Navbar,
@@ -9,7 +9,56 @@ import {
     Image
 } from 'react-bootstrap';
 
+import ModalInfo from "../../ModalInfo";
+
+const data = [
+    {
+        id: 1,
+        name: 'ホアン・チュン・ヒエウ',
+        email: 'hoanghieu@gmail.com',
+        core: 1200,
+        block: false
+    },
+    {
+        id: 2,
+        name: 'グエン・ヴ・ロン',
+        email: 'long@gmail.com',
+        core: 1100,
+        block: true
+    },
+    {
+        id: 3,
+        name: 'ファム・トゥアン・ズン',
+        email: 'phamdung@gmail.com',
+        core: 1050,
+        block: true
+    },
+    {
+        id: 4,
+        name: 'レー・ドゥック・ドー',
+        email: 'ledo@gmail.com',
+        core: 1000,
+        block: true
+    },
+];
+
 const Header = () => {
+
+    const [show, setShow] = useState(false);
+    const [search, setSearch] = useState('');
+    const [information, setInformation] = useState({});
+
+    const searchInfo = () => {
+        let info = data.find((item)=> item.name === search);
+
+        if (info) {
+            setInformation(info);
+        } else {
+            setInformation(null);
+        }
+        setShow(true);
+    }
+
     return (
         <div>
             <Navbar bg={`light`} expand={`lg`} style={{display: 'block'}}>
@@ -29,6 +78,12 @@ const Header = () => {
                                 aria-describedby="button-addon4" 
                                 className="form-control border-0" 
                                 style={{background: "none"}}
+                                onChange={(event)=> {setSearch(event.target.value);}}
+                                onKeyDown={(event)=> {
+                                    if (event.keyCode === 13) {
+                                        searchInfo();
+                                    }
+                                }}
                             />
                         </div>
                     </Col>
@@ -44,13 +99,14 @@ const Header = () => {
                                 } 
                                 id="basic-nav-dropdown"
                             >
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.1">プロフィール</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">サインアウト</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Col>
                 </Row>
             </Navbar>
+            <ModalInfo show={show} info={information} onHide={()=>{setShow(false);}} />
         </div>
     );
 }

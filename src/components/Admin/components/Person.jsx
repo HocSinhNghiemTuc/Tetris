@@ -9,7 +9,7 @@ const Person = (props) => {
             <td>{person.core}</td>
             <td>{person.rank}</td>
             <td>
-                <input type="checkbox" checked={person.block} onChange={()=>{ props.updateStatus(person.id); }} />
+                <input type="radio" checked={person.block} onChange={()=>{ props.updateStatus(person.id); }} />
             </td>
         </tr>
     );

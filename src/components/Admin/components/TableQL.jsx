@@ -39,10 +39,14 @@ const TableQL = () => {
 
     const [pagi, setPagi] = useState({
         pre: false,
-        next: true,
+        next: false,
     });
-
     const [persons, setPersons] = useState(data);
+    const [Sort, setSort] = useState({
+        name: true,
+        email: true,
+        rank: true,
+    });
 
     useEffect(() => {
         const sortCore = () => {
@@ -62,25 +66,43 @@ const TableQL = () => {
 
         switch (name) {
             case 'name':
-                prs = prs.sort((a,b) => {
-                    return a.name.length - b.name.length;
-                });
+                if (Sort.name){
+                    prs = prs.sort((a,b) => {
+                        return b.name.length - a.name.length;
+                    });
+                } else {
+                    prs = prs.sort((a,b) => {
+                        return a.name.length - b.name.length;
+                    });
+                }
                 setPersons([...prs]);
+                setSort({...Sort, name: !Sort.name});
                 break;
             case 'email':
-                if (value === 'up') {
-                    prs = prs.sort((a,b) => {
-                        return a.email.length - b.email.length;
-                    });
-                    setPersons([...prs]);
-                } else {
+                if (Sort.email) {
                     prs = prs.sort((a,b) => {
                         return b.email.length - a.email.length;
                     });
-                    setPersons([...prs]);
+                } else {
+                    prs = prs.sort((a,b) => {
+                        return a.email.length - b.email.length;
+                    });
                 }
+                setPersons([...prs]);
+                setSort({...Sort, email: !Sort.email});
                 break;
-            case 'core':
+            case 'rank':
+                if (Sort.rank) {
+                    prs = prs.sort((a,b) => {
+                        return b.rank - a.rank;
+                    });
+                } else {
+                    prs = prs.sort((a,b) => {
+                        return a.rank - b.rank;
+                    });
+                }
+                setPersons([...prs]);
+                setSort({...Sort, rank: !Sort.rank});
                 break;
             default: return;
         }
@@ -107,9 +129,9 @@ const TableQL = () => {
                         <th>
                             <div className="d-flex justify-content-between">
                                 <p>ユーザーネーム</p>
-                                <div onClick={() => {sortInformation('name', 'up')}} style={{cursor: 'pointer'}}>
+                                <div onClick={() => {sortInformation('name')}} style={{cursor: 'pointer'}}>
                                     <span 
-                                        className="fa fa-lg fa-caret-up" 
+                                        className={`fa fa-lg fa-caret-${Sort.name? 'up' : 'down'}`} 
                                         aria-hidden="true"
                                     ></span>
                                 </div>
@@ -120,16 +142,10 @@ const TableQL = () => {
                                 <p>メールアドレス</p>
                                 <div>
                                     <span 
-                                        className="fa fa-lg fa-caret-up" 
+                                        className={`fa fa-lg fa-caret-${Sort.email? 'up' : 'down'}`}  
                                         style={{cursor: 'pointer'}}
                                         aria-hidden="true"
-                                        onClick={() => {sortInformation('email', 'up')}}
-                                    ></span>
-                                    <span 
-                                        className="fa fa-lg fa-caret-down" 
-                                        aria-hidden="true"
-                                        style={{cursor: 'pointer'}}
-                                        onClick={() => {sortInformation('email', 'down')}}
+                                        onClick={() => {sortInformation('email')}}
                                     ></span>
                                 </div>
                             </div>
@@ -144,9 +160,10 @@ const TableQL = () => {
                                 <p>ランク</p>
                                 <div>
                                     <span 
-                                        className="fa fa-lg fa-caret-down" 
+                                        className={`fa fa-lg fa-caret-${Sort.rank? 'up' : 'down'}`}  
                                         aria-hidden="true"
-                                        onClick={() => {sortInformation('core', 'down')}}
+                                        style={{cursor: 'pointer'}}
+                                        onClick={() => {sortInformation('rank')}}
                                     ></span>
                                 </div>
                             </div>
