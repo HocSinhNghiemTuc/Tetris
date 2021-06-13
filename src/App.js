@@ -19,6 +19,7 @@ export default function App() {
       if (user) {
         newUser = await storeUserInfo(user);
       }
+      
       setUser(newUser);
     });
   }, []);
@@ -32,6 +33,9 @@ export default function App() {
     if (user) {
       return (
         <div class="navbar-end">
+          <div class="navbar-item">
+            <img src = {user.avatar} />
+          </div>
           <div class="navbar-item">
             {user.name}
           </div>

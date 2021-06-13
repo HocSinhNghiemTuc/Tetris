@@ -28,9 +28,14 @@ export const storeUserInfo = async (user) => {
   const { uid } = user;
   const userDoc = await db.collection("users").doc(uid).get();
   if (!userDoc.exists) {
-    await db.collection("users").doc(uid).set({ name: user.displayName });
+    await db.collection("users").doc(uid).set({ name: user.displayName, avatar: user.photoURL, email: user.email, isAdmin: false, score: 0, isBlocked: false })
     return {
+      email: user.email,
+      avatar: user.photoURL,
       name: user.displayName,
+      isAdmin: false,
+      score: null,
+      isBlocked: false,
       id: uid,
     };
   } else {
