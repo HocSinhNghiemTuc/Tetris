@@ -12,6 +12,7 @@ import { BrowserRouter } from "react-router-dom";
 import User from "./components/Admin/components/User";
 import Header from "./components/Admin/components/Header";
 import TableQL from "./components/Admin/components/TableQL";
+import Tetris from "./components/Tetris";
 // >>>>>>> master
 
 export default function App() {
@@ -38,10 +39,13 @@ export default function App() {
   const Content = () => {
     if (user) {
       return (
-        <div class="navbar-end">
+        <div className="navbar-end">
           <div>
             <BrowserRouter>
               <Header {...user} />
+              {
+                !admin && <Tetris current_user={user} setUser={setUser}/>
+              }
               <Switch>
                 <Route path="/login" component={Login}/>
                 <Route path="/users" component={() => admin ? <Admin /> : <User {...user} />} />
@@ -53,11 +57,10 @@ export default function App() {
     } else {
       return (<Login />)
     }
-  }
+  };
 
   return (
-    <div className="container is-fluid">
-      <header class="navbar">
+    <div className="container-fluid">
         {loading ? (
           <p>
             LOADING.....
@@ -65,7 +68,6 @@ export default function App() {
         ) : (
           <Content />
         )}
-      </header >
       </div>
 
   // return <Tetris />;

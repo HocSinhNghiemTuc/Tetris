@@ -78,19 +78,19 @@ const Button = styled.button`
 `;
 
 const LoseGame = ({status, portrait, pixelSize, theme3d, restartClick}) => (
-	<CenterOverlay>
-		<LoseContainer portrait={portrait} pixelSize={pixelSize} theme3d={theme3d}>
-			<Title portrait={portrait}>Game Over</Title>
-			<ContainerStatus>
-				<StatusRow>SCORE: {status.score}</StatusRow>
-				<StatusRow>LEVEL: {status.level}</StatusRow>
-				<StatusRow>LINES: {status.lines}</StatusRow>
-			</ContainerStatus>
-			<ContainerButton portrait={portrait}>
-				<Button pixelSize={pixelSize} onClick={() => restartClick()}>Restart</Button>
-			</ContainerButton>
-		</LoseContainer>
-	</CenterOverlay>
+    <CenterOverlay>
+        <LoseContainer portrait={portrait} pixelSize={pixelSize} theme3d={theme3d}>
+            <Title portrait={portrait}>Game Over</Title>
+            <ContainerStatus>
+                <StatusRow>SCORE: {status.score}</StatusRow>
+                <StatusRow>LEVEL: {status.level}</StatusRow>
+                <StatusRow>LINES: {status.lines}</StatusRow>
+            </ContainerStatus>
+            <ContainerButton portrait={portrait}>
+                <Button pixelSize={pixelSize} onClick={() => restartClick()}>Homepage</Button>
+            </ContainerButton>
+        </LoseContainer>
+    </CenterOverlay>
 );
 
 export default LoseGame;

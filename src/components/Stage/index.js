@@ -10,8 +10,9 @@ import LoseGame from '../LoseGame';
 import Color from "color";
 
 const Game = styled.div`
-	width: 100vw;
-	height: ${props => (props.portrait ? "95" : "100")}vh;
+	width: 97vw;
+	height: 85vh;
+	overflow: hidden;
 	display: flex;
 	flex-direction: ${props => (props.portrait ? "column" : "row")};
 	justify-content: center;
@@ -176,8 +177,8 @@ const Stage = ({ lose, restartClick, map, player, hint, status, paused, ...other
 	const stageRef = useRef(null);
 
 	useEffect(() => {
-		let pixelSizeHeight = height / 20;
-		let pixelSizeWidth = width / 32;
+		let pixelSizeHeight = height*0.85 / 20;
+		let pixelSizeWidth = width*0.97 / 32;
 		if (portrait) {
 			pixelSizeHeight = height / 26;
 			pixelSizeWidth = width / 12;

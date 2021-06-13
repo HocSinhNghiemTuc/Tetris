@@ -34,7 +34,7 @@ export const storeUserInfo = async (user) => {
       avatar: user.photoURL,
       name: user.displayName,
       isAdmin: false,
-      score: null,
+      score: 0,
       isBlocked: false,
       id: uid,
     };
@@ -44,15 +44,15 @@ export const storeUserInfo = async (user) => {
       ...userDoc.data(),
     };
   }
-}
+};
 
 export const updateUser = async (user) => {
   try {
     const userDoc = await firebase.firestore().collection("users").doc(user.id).get();
     if (userDoc.exists) {
-      await firebase.firestore().collection("users").doc(user.id).update({ ...userDoc.data() });
+      await firebase.firestore().collection("users").doc(user.id).update({ ...user });
     }
   } catch (err) {
     console.log(err);
   }
-}
+};

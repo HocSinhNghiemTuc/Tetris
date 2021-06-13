@@ -7,6 +7,7 @@ import { useInterval } from "../../hooks/useInterval";
 import Center from "../Center";
 
 import { PrintPlayerInMap } from "../../utils/Utils";
+import {updateUser} from "../../lib/firebase";
 
 //TODO: Alterar OnClick (rotatePlayer) para OnFastClick (criar hook)
 //TODO: Organização do componente "Game" (Separar codigo em hooks, outros components e funcoes)
@@ -104,7 +105,7 @@ const getRandomPlayer = player => {
 	return { pos, bloco, next };
 };
 
-const Game = () => {
+const Game = ({current_user, setUser, setRuning}) => {
 	const [map, setMap] = useState(initialMap);
 	const [player, setPlayer] = useState();
 	const [down, setDown] = useState(false);
@@ -131,15 +132,12 @@ const Game = () => {
 	}, [level, score]);
 
 	const restartGame = () => {
-		setMap(initialMap); //TODO: lose game
-		setlines(0);
-		setScore(0);
-		setLevel(1);
-		setGameOver(false);
-	}
+		setRuning(false);
+	};
 
-	const loseGame = () => {
+	const loseGame = async () => {
 		setGameOver(true);
+		updateUser({...current_user,score: current_user.score > score ? current_user.score: score });
 	};
 
 	const drop = () => {
