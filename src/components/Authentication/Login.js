@@ -7,7 +7,6 @@ import { firebase, auth, uiConfig } from "../../lib/firebase";
 function Login() {
   return (
     <div className="column panel-block">
-      <p>Hello</p> 
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
     </div>
   );
