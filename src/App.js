@@ -6,6 +6,13 @@ import Admin from "./components/Admin";
 import Login from "./components/Authentication/Login";
 
 import { auth, storeUserInfo, updateUser } from "./lib/firebase";
+// =======
+// import { Route, Switch } from "react-router";
+// import { BrowserRouter } from "react-router-dom";
+// import User from "./components/Admin/components/User";
+// import Header from "./components/Admin/components/Header";
+// import TableQL from "./components/Admin/components/TableQL";
+// >>>>>>> master
 
 export default function App() {
 
@@ -64,6 +71,17 @@ export default function App() {
         )}
       </header >
     </div >
+// ======= Hiếu
+//   return (
+//     <BrowserRouter>
+//       <Header/>
+//       <Switch>
+//         <Route path="/" exact component={TableQL}/>
+//         <Route path="/users" component={User}/>
+//       </Switch>
+//     </BrowserRouter>
+    
+// Hiếu
   );
 }
 

@@ -8,14 +8,18 @@ import {
     Col,
     Image
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
         <div>
             <Navbar bg={`light`} expand={`lg`} style={{display: 'block'}}>
                 <Row>
-                    <Col md={2} xs={2}>
+                    <Col md={1} xs={1}>
                         Logo
+                    </Col>
+                    <Col md={1} xs={1}>
+                        <Link to="/" style={{textDecoration: 'none'}}>ホーム</Link>
                     </Col>
                     <Col md={8} xs={6}>
                         <div className="input-group border rounded-pill p-1" style={{width: '65%'}}>
@@ -37,14 +41,18 @@ const Header = () => {
                             <NavDropdown 
                                 title={
                                     <Image 
-                                        src={`https://sohanews.sohacdn.com/2020/2/26/photo-1-158270587240769675748.jpg`} 
+                                        src={`https://bootdey.com/img/Content/avatar/avatar7.png`} 
                                         roundedCircle 
                                         style={{height: '45px', width: '50px'}}
                                     />
                                 } 
                                 id="basic-nav-dropdown"
                             >
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                                <NavDropdown.Item >
+                                    <Link to="/users" style={{textDecoration: 'none'}} >
+                                        プロフィール
+                                    </Link>
+                                </NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
