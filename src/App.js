@@ -7,15 +7,16 @@ import Login from "./components/Authentication/Login";
 
 import { auth, storeUserInfo, updateUser } from "./lib/firebase";
 // =======
-// import { Route, Switch } from "react-router";
-// import { BrowserRouter } from "react-router-dom";
-// import User from "./components/Admin/components/User";
-// import Header from "./components/Admin/components/Header";
-// import TableQL from "./components/Admin/components/TableQL";
+import { Route, Switch } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import User from "./components/Admin/components/User";
+import Header from "./components/Admin/components/Header";
+import TableQL from "./components/Admin/components/TableQL";
 // >>>>>>> master
 
 export default function App() {
 
+  const [admin, setAdmin] = useState(true);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState([]);
 
@@ -25,29 +26,27 @@ export default function App() {
       let newUser = null;
       if (user) {
         newUser = await storeUserInfo(user);
+        if (!newUser.isAdmin) {
+          setAdmin(false);
+        }
       }
-      
+
       setUser(newUser);
     });
   }, []);
 
-  const logout = () => {
-    auth.signOut();
-  };
-
-
-  const HeaderContent = () => {
+  const Content = () => {
     if (user) {
       return (
         <div class="navbar-end">
-          <div class="navbar-item">
-            <img src = {user.avatar} />
-          </div>
-          <div class="navbar-item">
-            {user.name}
-          </div>
-          <div class="navbar-item">
-            <button class="button is-danger is-light is-small" onClick={logout} > Logout</button>
+          <div>
+            <BrowserRouter>
+              <Header {...user} />
+              <Switch>
+                <Route path="/login" component={Login}/>
+                <Route path="/users" component={() => admin ? <Admin /> : <User {...user} />} />
+              </Switch>
+            </BrowserRouter>
           </div>
         </div >
       )
@@ -56,9 +55,6 @@ export default function App() {
     }
   }
 
-
-  // return <Tetris />;
-  //return <Admin />;
   return (
     <div className="container is-fluid">
       <header class="navbar">
@@ -67,21 +63,14 @@ export default function App() {
             LOADING.....
           </p>
         ) : (
-          <HeaderContent />
+          <Content />
         )}
       </header >
-    </div >
-// ======= Hiếu
-//   return (
-//     <BrowserRouter>
-//       <Header/>
-//       <Switch>
-//         <Route path="/" exact component={TableQL}/>
-//         <Route path="/users" component={User}/>
-//       </Switch>
-//     </BrowserRouter>
-    
-// Hiếu
+      </div>
+
+  // return <Tetris />;
+  //return <Admin />;
+
   );
 }
 

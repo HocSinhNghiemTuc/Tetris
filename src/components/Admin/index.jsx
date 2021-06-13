@@ -6,7 +6,6 @@ import TableQL from "./components/TableQL";
 const index = () => {
     return (
         <div>
-            <Header />
             <TableQL />
         </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { auth }  from "../../../lib/firebase";
 import {
     Navbar,
     Nav,
@@ -9,8 +9,11 @@ import {
     Image
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+const logout = () => {
+    auth.signOut();
+  };
 
-const Header = () => {
+const Header = (user) => {
     return (
         <div>
             <Navbar bg={`light`} expand={`lg`} style={{display: 'block'}}>
@@ -41,7 +44,7 @@ const Header = () => {
                             <NavDropdown 
                                 title={
                                     <Image 
-                                        src={`https://bootdey.com/img/Content/avatar/avatar7.png`} 
+                                        src={user.avatar} 
                                         roundedCircle 
                                         style={{height: '45px', width: '50px'}}
                                     />
@@ -53,7 +56,7 @@ const Header = () => {
                                         プロフィール
                                     </Link>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                                <NavDropdown.Item href="/login" onClick={logout}>サインアウト</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Col>
