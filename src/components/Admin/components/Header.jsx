@@ -1,12 +1,14 @@
 import React from 'react';
 import { auth }  from "../../../lib/firebase";
+import logo from '../../../assets/Logo.png'
 import {
     Navbar,
     Nav,
     NavDropdown,
     Row,
     Col,
-    Image
+    Image,
+    Button
 } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
@@ -18,7 +20,7 @@ const logout = () => {
 };
 
 const Header = (user) => {
-
+    
     const [items, setItems] = useUser();
     const [show, setShow] = React.useState(false);
     const [search, setSearch] = React.useState('');
@@ -43,10 +45,17 @@ const Header = (user) => {
             <Navbar bg={`light`} expand={`lg`} style={{display: 'block'}}>
                 <Row>
                     <Col md={1} xs={1}>
-                        Logo
+                        <Link to="/">
+                            <Image
+                                src={logo}
+                                thumbnail
+                            />
+                        </Link>
                     </Col>
                     <Col md={1} xs={1}>
-                        <Link to="/" style={{textDecoration: 'none'}}>ホーム</Link>
+                        <Link to="/" style={{textDecoration: 'none'}}>
+                            <Button>ホーム</Button>
+                        </Link>
                     </Col>
                     <Col md={8} xs={6}>
                         <div className="input-group border rounded-pill p-1" style={{width: '65%'}}>
@@ -70,7 +79,9 @@ const Header = (user) => {
                         </div>
                     </Col>
                     <Col md={2} xs={3}>
-                        <Nav className="mr-auto ml-5">
+                        {
+                            !user.avatar? '':
+                            <Nav className="mr-auto ml-5">
                             <NavDropdown 
                                 title={
                                     <Image 
@@ -89,6 +100,7 @@ const Header = (user) => {
                                 <NavDropdown.Item href="/login" onClick={logout}>サインアウト</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
+                        }
                     </Col>
                 </Row>
             </Navbar>
