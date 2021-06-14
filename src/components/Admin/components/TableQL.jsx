@@ -1,101 +1,105 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState } from 'react';
 
 import "../assets/styles.css";
 
+import useUser from "../../../hooks/useUsers";
+
 import Person from './Person';
 
-const data = [
-    {
-        id: 1,
-        name: 'ホアン・チュン・ヒエウ',
-        email: 'hoanghieu@gmail.com',
-        core: 1200,
-        block: false
-    },
-    {
-        id: 2,
-        name: 'グエン・ヴ・ロン',
-        email: 'long@gmail.com',
-        core: 1100,
-        block: true
-    },
-    {
-        id: 3,
-        name: 'ファム・トゥアン・ズン',
-        email: 'phamdung@gmail.com',
-        core: 1050,
-        block: true
-    },
-    {
-        id: 4,
-        name: 'レー・ドゥック・ドー',
-        email: 'ledo@gmail.com',
-        core: 1000,
-        block: true
-    },
-];
+const count_one_page = 10;
 
 const TableQL = () => {
 
-    const [pagi, setPagi] = useState({
-        pre: false,
-        next: true,
+    const [items, setItems, updateBlock] = useUser();
+    const [users, setUsers] = React.useState([]);
+    const [pagination, setPagination] = React.useState(0);
+    const [page, setPage] = React.useState(1);
+
+    const [Sort, setSort] = useState({
+        name: true,
+        email: true,
+        rank: true,
     });
 
-    const [persons, setPersons] = useState(data);
+    React.useEffect(() => {
+        const _items = items.slice(0, count_one_page);
+        setUsers([..._items]);
+        setPagination(Math.ceil(items.length/count_one_page));
+    }, [items])
 
-    useEffect(() => {
-        const sortCore = () => {
-            let prs = persons.sort((a, b) => b.core - a.core);
-            for (let index = 0; index < prs.length; index++) {
-                prs[index] = {...prs[index], rank: index+1};
-            }
-            setPersons([...prs]);
-        }
+    const clickPagination = (_page) => {
+        let start = (_page - 1) * count_one_page;
+        let end = _page * count_one_page;
 
-        sortCore();
-        // eslint-disable-next-line
-    }, []);
+        const _items = items;
+        const list = _items.slice(start, end);
 
-    const sortInformation = (name, value) => {
-        let prs = persons;
+        setPage(_page);
+        setUsers([...list]);
+    }
+
+    const sortInformation = (name) => {
+        let prs = users;
 
         switch (name) {
             case 'name':
-                prs = prs.sort((a,b) => {
-                    return a.name.length - b.name.length;
-                });
-                setPersons([...prs]);
+                if (Sort.name){
+                    prs = prs.sort((a,b) => {
+                        return b.name.length - a.name.length;
+                    });
+                } else {
+                    prs = prs.sort((a,b) => {
+                        return a.name.length - b.name.length;
+                    });
+                }
+                setUsers([...prs]);
+                setSort({...Sort, name: !Sort.name});
                 break;
             case 'email':
-                if (value === 'up') {
-                    prs = prs.sort((a,b) => {
-                        return a.email.length - b.email.length;
-                    });
-                    setPersons([...prs]);
-                } else {
+                if (Sort.email) {
                     prs = prs.sort((a,b) => {
                         return b.email.length - a.email.length;
                     });
-                    setPersons([...prs]);
+                } else {
+                    prs = prs.sort((a,b) => {
+                        return a.email.length - b.email.length;
+                    });
                 }
+                setUsers([...prs]);
+                setSort({...Sort, email: !Sort.email});
                 break;
-            case 'core':
+            case 'rank':
+                if (Sort.rank) {
+                    prs = prs.sort((a,b) => {
+                        return b.rank - a.rank;
+                    });
+                } else {
+                    prs = prs.sort((a,b) => {
+                        return a.rank - b.rank;
+                    });
+                }
+                setUsers([...prs]);
+                setSort({...Sort, rank: !Sort.rank});
                 break;
             default: return;
         }
     }
 
     const updateStatus = (id) => {
-        const prs = persons;
+        updateBlock(id);
+    }
 
-        if (prs.length > 0) {
-            const index = prs.findIndex(item => item.id === id);
-            if (index !== -1) {
-                prs[index] = {...prs[index], block: !prs[index].block};
-                setPersons([...prs]);
-            }
+    const renderPagination = (count) => {
+        let render = [];
+        for (let i = 0; i < count; i++) {
+            render.push(
+                <li className="page-item">
+                    <a className="page-link" href="#b" onClick={()=>{clickPagination(i+1)}}>{i+1}</a>
+                </li>
+            )
         }
+
+        return render;
     }
 
     return (
@@ -107,9 +111,9 @@ const TableQL = () => {
                         <th>
                             <div className="d-flex justify-content-between">
                                 <p>ユーザーネーム</p>
-                                <div onClick={() => {sortInformation('name', 'up')}} style={{cursor: 'pointer'}}>
+                                <div onClick={() => {sortInformation('name')}} style={{cursor: 'pointer'}}>
                                     <span 
-                                        className="fa fa-lg fa-caret-up" 
+                                        className={`fa fa-lg fa-caret-${Sort.name? 'up' : 'down'}`} 
                                         aria-hidden="true"
                                     ></span>
                                 </div>
@@ -120,16 +124,10 @@ const TableQL = () => {
                                 <p>メールアドレス</p>
                                 <div>
                                     <span 
-                                        className="fa fa-lg fa-caret-up" 
+                                        className={`fa fa-lg fa-caret-${Sort.email? 'up' : 'down'}`}  
                                         style={{cursor: 'pointer'}}
                                         aria-hidden="true"
-                                        onClick={() => {sortInformation('email', 'up')}}
-                                    ></span>
-                                    <span 
-                                        className="fa fa-lg fa-caret-down" 
-                                        aria-hidden="true"
-                                        style={{cursor: 'pointer'}}
-                                        onClick={() => {sortInformation('email', 'down')}}
+                                        onClick={() => {sortInformation('email')}}
                                     ></span>
                                 </div>
                             </div>
@@ -144,9 +142,10 @@ const TableQL = () => {
                                 <p>ランク</p>
                                 <div>
                                     <span 
-                                        className="fa fa-lg fa-caret-down" 
+                                        className={`fa fa-lg fa-caret-${Sort.rank? 'up' : 'down'}`}  
                                         aria-hidden="true"
-                                        onClick={() => {sortInformation('core', 'down')}}
+                                        style={{cursor: 'pointer'}}
+                                        onClick={() => {sortInformation('rank')}}
                                     ></span>
                                 </div>
                             </div>
@@ -159,7 +158,7 @@ const TableQL = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {persons.map((person, index) => {
+                    {users.map((person, index) => {
                         return <Person person={person} key={index} updateStatus={updateStatus} />
                     })}
                 </tbody>
@@ -167,9 +166,13 @@ const TableQL = () => {
         </div>
         <nav aria-label="Page navigation example">
             <ul className="pagination justify-content-center">
-                <li className={`page-item ${pagi.pre? '' : 'disabled'}`}><a className="page-link" href="#a">Previous</a></li>
-                <li className="page-item"><a className="page-link" href="#b">1</a></li>
-                <li className={`page-item ${pagi.next? '': 'disabled'}`}><a className="page-link" href="#e">Next</a></li>
+                <li className={`page-item ${(page-1) !== 0? '' : 'disabled'}`}>
+                    <a className="page-link" href="#a" onClick={() =>{clickPagination(page-1)}}>Previous</a>
+                </li>
+                {renderPagination(pagination)}
+                <li className={`page-item ${(page+1) <= pagination? '': 'disabled'}`}>
+                    <a className="page-link" href="#e" onClick={() =>{clickPagination(page+1)}}>Next</a>
+                </li>
             </ul>
         </nav>
     </div>
