@@ -18,22 +18,23 @@ import Tetris from "./components/Tetris";
 
 export default function App() {
 
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      setLoading(false);
       let newUser = null;
       if (user) {
         newUser = await storeUserInfo(user);
         if (!newUser.isAdmin) {
           setAdmin(false);
+        } else {
+          setAdmin(true);
         }
       }
-
       setUser(newUser);
+      setLoading(false);
     });
   }, []);
 
