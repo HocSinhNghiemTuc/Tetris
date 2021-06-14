@@ -133,6 +133,7 @@ const Game = ({current_user, setUser, setRuning}) => {
 
 	const restartGame = () => {
 		setRuning(false);
+		setUser({...current_user,score: current_user.score > score ? current_user.score: score });
 	};
 
 	const loseGame = async () => {
