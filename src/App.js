@@ -39,27 +39,43 @@ export default function App() {
 
   const Content = () => {
     if (user) {
-      return (
-        <div className="navbar-end">
-          <div>
-            <BrowserRouter>
-              <Header {...user} />
-              {
-                !admin && <Tetris current_user={user} setUser={setUser}/>
+      if (!user.isBlocked) {
+        return (
+          <div className="navbar-end">
+            <div>
+              <BrowserRouter>
+                <Header {...user} />
+                <Switch>
+                  <Route path="/login" component={Login} />
+                  <Route path="/users" component={() => admin ? <TableQL /> : <Use  r {...user} />} />
+                  <Route exact path="/" component={() => admin ? <TableQL /> : <Tetris current_user={user} setUser={setUser} />} />
+                  <Route path="/users/ranking" component={() => <Ranking />} />
+                </Switch>
+              </BrowserRouter>
+            </div>
+          </div >
+        )
+      } else {
+        return (
+          <div className="navbar-end">
+            <div>
+              <Login />
+            </div>
+            <script>
+              function dialog(){
+                window.alert("Your Account is Blocked")
               }
-              <Switch>
-                <Route path="/login" component={Login}/>
-                <Route path="/users" exact component={() => !admin ? <Admin /> : <User {...user} />} />
-                <Route path="/users/ranking" component={() => <Ranking />} />
-              </Switch>
-            </BrowserRouter>
+            </script>
           </div>
-        </div >
-      )
+        )
+      }
+
     } else {
       return (<Login />)
     }
   };
+
+
 
   return (
     <div className="container-fluid">
