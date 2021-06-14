@@ -47,7 +47,7 @@ export default function App() {
                 <Header {...user} />
                 <Switch>
                   <Route path="/login" component={Login} />
-                  <Route path="/users" component={() => admin ? <TableQL /> : <User {...user} />} />
+                  <Route exact path="/users" component={() => admin ? <TableQL /> : <User {...user} />} />
                   <Route exact path="/" component={() => admin ? <TableQL /> : <Tetris current_user={user} setUser={setUser} />} />
                   <Route path="/users/ranking" component={() => <Ranking />} />
                 </Switch>
