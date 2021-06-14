@@ -8,12 +8,36 @@ import {
     Col,
     Image
 } from 'react-bootstrap';
+
 import { Link } from 'react-router-dom';
+import useUser from "../../../hooks/useUsers";
+import ModalInfo from "../../ModalInfo";
+
 const logout = () => {
     auth.signOut();
-  };
+};
 
 const Header = (user) => {
+
+    const [items, setItems] = useUser();
+    const [show, setShow] = React.useState(false);
+    const [search, setSearch] = React.useState('');
+    const [information, setInformation] = React.useState({});
+
+    const searchInfo = async () => {
+        const _items = items;
+        let info = null;
+
+        info = _items.find(i => i.name === search);
+
+        if (info) {
+            setInformation(info);
+        } else {
+            setInformation(null);
+        }
+        setShow(true);
+    }
+
     return (
         <div>
             <Navbar bg={`light`} expand={`lg`} style={{display: 'block'}}>
@@ -36,6 +60,12 @@ const Header = (user) => {
                                 aria-describedby="button-addon4" 
                                 className="form-control border-0" 
                                 style={{background: "none"}}
+                                onChange={(event)=> {setSearch(event.target.value);}}
+                                onKeyDown={(event)=> {
+                                    if (event.keyCode === 13) {
+                                        searchInfo();
+                                    }
+                                }}
                             />
                         </div>
                     </Col>
@@ -62,6 +92,7 @@ const Header = (user) => {
                     </Col>
                 </Row>
             </Navbar>
+            <ModalInfo show={show} info={information} onHide={()=>{setShow(false);}} />
         </div>
     );
 }

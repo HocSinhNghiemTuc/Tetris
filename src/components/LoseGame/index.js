@@ -59,8 +59,8 @@ const ContainerButton = styled.div`
 `;
 
 const Button = styled.button`
-	width: ${props => props.pixelSize * 10}px;
-	height: ${props => props.pixelSize * 2}px;
+	width: ${props => props.pixelSize * 6}px;
+	height: ${props => props.pixelSize * 1}px;
 	font-size: ${props => props.pixelSize / 1.5}px;
 	font-family: "ZCOOL QingKe HuangYou", cursive;
 	color: white;

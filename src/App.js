@@ -11,6 +11,7 @@ import { Route, Switch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import User from "./components/Admin/components/User";
 import Header from "./components/Admin/components/Header";
+import Ranking from "./components/Ranking";
 import TableQL from "./components/Admin/components/TableQL";
 import Tetris from "./components/Tetris";
 // >>>>>>> master
@@ -48,7 +49,8 @@ export default function App() {
               }
               <Switch>
                 <Route path="/login" component={Login}/>
-                <Route path="/users" component={() => admin ? <Admin /> : <User {...user} />} />
+                <Route path="/users" exact component={() => !admin ? <Admin /> : <User {...user} />} />
+                <Route path="/users/ranking" component={() => <Ranking />} />
               </Switch>
             </BrowserRouter>
           </div>

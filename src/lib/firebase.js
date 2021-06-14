@@ -56,3 +56,28 @@ export const updateUser = async (user) => {
     console.log(err);
   }
 };
+
+export const getUsers = async () => {
+  try {
+      const snapshot = await db
+                      .collection("users")
+                      .where('isAdmin', '==', false)
+                      .get();
+      const items = snapshot.docs.map(
+          (doc) => ({ ...doc.data(), id: doc.id })
+      );
+      return items;
+  } catch (error) {
+      console.log(error);
+      return [];
+  }
+}
+
+export const updateBlockUser = async (block, id) => {
+  try {
+      const userRef = db.collection('users').doc(id);
+      await userRef.update(block);
+  } catch (error) {
+      console.log(error);
+  }
+}
