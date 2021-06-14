@@ -1,42 +1,20 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { updateAvatar } from '../../../lib/firebase';
+import Upload from '../../Upload/Upload';
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-    input: {
-        display: 'none',
-    },
-}));
 const User = (user) => {
-    const classes = useStyles();
+    // -------->
+    const handleImageChanged = async downlodUrl => {
+        await updateAvatar(user, downlodUrl);
+    }
+    // -------->
     return (
         <div className="container bootstrap snippets bootdey pt-5 pb-5">
             <div className="card-body inf-content">
                 <div className="row">
                     <div className="col-md-4">
-                        <img alt="" style={{ width: `600px` }} title="" className="rounded-circle img-thumbnail isTooltip" src={user.avatar} data-original-title="Usuario" />
-                        <div className={classes.root}>
-                            <input
-                                accept="image/*"
-                                className={classes.input}
-                                id="contained-button-file"
-                                multiple
-                                type="file"
-                            />
-                            <label htmlFor="contained-button-file">
-                                <Button variant="contained" color="primary" component="span">
-                                    アップロード
-                    </Button>
-                            </label>
-                        </div>
+                        <Upload userImage={user.avatar} onSelectImage={handleImageChanged}/>
                     </div>
-
                     <div className="col-md-6">
                         <strong>情報</strong><br />
                         <div className="table-responsive">
