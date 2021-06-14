@@ -81,3 +81,25 @@ export const updateBlockUser = async (block, id) => {
       console.log(error);
   }
 }
+
+export const updateAvatar = async (user,avatar) => {
+  try {
+    const userDoc = await firebase.firestore().collection("users").doc(user.id).get();
+    if (userDoc.exists) {
+      await firebase.firestore().collection("users").doc(user.id).update({ ...userDoc.data(), avatar: avatar });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const uploadAvatar = async (user) => {
+  const ref = firebase.storage().ref().child(`/avatars/${user.photoURL}`);
+  let downloadUrl = "";
+  try {
+    await ref.put(user);
+    downloadUrl = await ref.getDownloadURL();
+  } catch (err) {
+    console.log(err);
+  }
+  return downloadUrl;
+};
