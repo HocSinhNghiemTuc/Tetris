@@ -3,7 +3,7 @@ import "./styles.css";
 
 import khung from './assets/khung.png';
 
-import {Image} from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 
 import Admin from "./components/Admin";
 import Login from "./components/Authentication/Login";
@@ -40,13 +40,17 @@ export default function App() {
       setLoading(false);
     });
   }, []);
-  
+
+  const logout = () => {
+    auth.signOut();
+  };
+
   const Body_Home = () => {
     return (
       <div className="mt-5 container">
         <div className="row">
           <div className="col-lg-6 col-md-6">
-            <div className="mx-5" style={{marginTop: `30%`}}>
+            <div className="mx-5" style={{ marginTop: `30%` }}>
               <h2 className="text-center">楽しませるため</h2>
               <h2 className="text-center">ストレスを解消するため</h2>
               <h2 className="text-center">他のユーザーとのコンペ</h2>
@@ -54,7 +58,7 @@ export default function App() {
             </div>
           </div>
           <div className="col-lg-6 col-md-6">
-            <div style={{marginTop: `20%`}}>
+            <div style={{ marginTop: `20%` }}>
               <Image
                 src={khung}
                 thumbnail
@@ -67,7 +71,7 @@ export default function App() {
   }
 
   const Content = () => {
-    
+
     if (user) {
       if (!user.isBlocked) {
         return (
@@ -89,9 +93,10 @@ export default function App() {
         return (
           <div className="navbar-end">
             <div>
-              <Login />
+              {logout()}
             </div>
             <script>
+              
               function dialog(){
                 window.alert("Your Account is Blocked")
               }
@@ -114,17 +119,17 @@ export default function App() {
 
   return (
     <div className="container-fluid">
-        {loading ? (
-          <p>
-            LOADING.....
-          </p>
-        ) : (
-          <Content />
-        )}
-      </div>
+      {loading ? (
+        <p>
+          LOADING.....
+        </p>
+      ) : (
+        <Content />
+      )}
+    </div>
 
-  // return <Tetris />;
-  //return <Admin />;
+    // return <Tetris />;
+    //return <Admin />;
 
   );
 }
