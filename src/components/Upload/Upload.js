@@ -25,7 +25,7 @@ function Upload({ userImage, onSelectImage }) {
     } else {
       return (
         <div>
-          <img alt="" style={{ width: `600px` }} title="" className="rounded-circle img-thumbnail isTooltip" src={imageUrl} data-original-title="Usuario" />
+          <img alt="" style={{ width: `600px`, height: `300px` }} title="" className="rounded-circle img-thumbnail isTooltip" src={imageUrl} data-original-title="Usuario" />
         </div>
       )
     }

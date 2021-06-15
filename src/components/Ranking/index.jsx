@@ -61,7 +61,8 @@ const Ranking = () => {
                             <Col md={{span: 7, offset:1}}>
                                 <Image src={`${item.avatar}`}
                                     roundedCircle 
-                                    height="32"
+                                    height="38"
+                                    width="40"
                                     style={{marginRight: '2rem'}}
                                 /> 
                                 {item.name}
