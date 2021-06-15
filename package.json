@@ -4,7 +4,6 @@
 	"description": "",
 	"keywords": [],
 	"main": "src/index.js",
-	"homepage": "http://mpirescarvalho.github.io/react-tetris",
 	"dependencies": {
 		"@material-ui/core": "^4.11.4",
 		"arrow-keys-react": "1.0.6",

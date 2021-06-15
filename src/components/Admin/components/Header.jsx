@@ -52,11 +52,6 @@ const Header = (user) => {
                             />
                         </Link>
                     </Col>
-                    <Col md={1} xs={1}>
-                        <Link to="/" style={{textDecoration: 'none'}}>
-                            <Button>ホーム</Button>
-                        </Link>
-                    </Col>
                     <Col md={8} xs={6}>
                         <div className="input-group border rounded-pill p-1" style={{width: '65%'}}>
                             <div className="input-group-prepend border-0">
