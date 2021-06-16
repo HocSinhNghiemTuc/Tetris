@@ -92,7 +92,7 @@ const Header = (user) => {
                                         プロフィール
                                     </Link>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="/login" onClick={logout}>サインアウト</NavDropdown.Item>
+                                <NavDropdown.Item href="/" onClick={logout}>サインアウト</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         }
