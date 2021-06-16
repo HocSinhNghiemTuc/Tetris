@@ -46,23 +46,11 @@ const User = (user) => {
                                         <td>
                                             <strong>
                                                 <span className="glyphicon glyphicon-cloud text-primary"></span>
-                                    ポイント
+                                    点
                                 </strong>
                                         </td>
                                         <td className="text-primary">
                                             {user.score}
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <strong>
-                                                <span className="glyphicon glyphicon-bookmark text-primary"></span>
-                                    クラース
-                                </strong>
-                                        </td>
-                                        <td className="text-primary">
-                                            {user.rank}
                                         </td>
                                     </tr>
                                 </tbody>

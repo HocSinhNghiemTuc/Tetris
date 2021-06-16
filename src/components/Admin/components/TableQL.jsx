@@ -104,7 +104,7 @@ const TableQL = () => {
 
     return (
     <div className="container mt-5">
-        <div className="row mb-2">
+        <div className="row mb-2" style={{height: `22rem`, overflow: 'auto'}}>
             <table id="example" className="table table-striped table-bordered" cellSpacing="0" width="100%">
                 <thead>
                     <tr>
