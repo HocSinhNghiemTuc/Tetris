@@ -81,18 +81,18 @@ const Ranking = () => {
             <div className="container mt-5">
                 <Card style={{ width: '50rem', marginLeft: '9rem'}} className="mb-3">
                     <Card.Header>ランキング</Card.Header>
-                    <ListGroup variant="flush">
+                    <ListGroup variant="flush" style={{height: `25rem`, overflow: 'auto'}}>
                         {renderRank(users)}
                     </ListGroup>
                 </Card>
                 <nav aria-label="Page navigation example">
                     <ul className="pagination justify-content-center">
                         <li className={`page-item ${(page-1) !== 0? '' : 'disabled'}`}>
-                            <a className="page-link" href="#a">Previous</a>
+                            <a className="page-link" href="#a" onClick={() =>{clickPagination(page-1)}}>Previous</a>
                         </li>
                         {renderPagination(pagination)}
                         <li className={`page-item ${(page+1) <= pagination? '': 'disabled'}`}>
-                            <a className="page-link" href="#e">Next</a>
+                            <a className="page-link" href="#e" onClick={() =>{clickPagination(page+1)}}>Next</a>
                         </li>
                     </ul>
                 </nav>
